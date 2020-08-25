@@ -11,7 +11,8 @@ public class TriangleAction {
     public double square(Triangle triangle) {
         Point vectorA = Vector(triangle.getPointX(), triangle.getPointY());
         Point vectorB = Vector(triangle.getPointX(), triangle.getPointZ());
-        return ((vectorA.getX() * vectorB.getY() - vectorB.getX() * vectorA.getY()) / 2);
+        double result=Math.abs((vectorA.getX() * vectorB.getY() - vectorB.getX() * vectorA.getY()) / 2);
+        return result;
     }
     public double perimeter(Triangle triangle){
         double lengthSideXY=Math.sqrt(Math.pow(triangle.getPointX().getX()-triangle.getPointY().getX(),2)+
