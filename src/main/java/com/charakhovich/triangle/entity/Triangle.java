@@ -1,18 +1,22 @@
 package com.charakhovich.triangle.entity;
 
+import com.charakhovich.triangle.obsever.Observer;
+import com.charakhovich.triangle.obsever.impl.TriangleObserver;
 import com.charakhovich.triangle.generator.Generator;
 
 public class Triangle extends Shape {
     private Point pointX;
     private Point pointY;
     private Point pointZ;
-    private long triangleId;
+    private Long triangleId;
+    private TriangleObserver observer;
 
     public Triangle(Point pointX, Point pointY, Point pointZ) {
         this.pointX = pointX;
         this.pointY = pointY;
         this.pointZ = pointZ;
         triangleId = Generator.generateID();
+        Observer observer;
     }
 
     public Triangle() {
@@ -25,6 +29,7 @@ public class Triangle extends Shape {
 
     public void setPointX(Point pointX) {
         this.pointX = pointX;
+        notifyObservers();
     }
 
     public Point getPointY() {
@@ -33,6 +38,7 @@ public class Triangle extends Shape {
 
     public void setPointY(Point pointY) {
         this.pointY = pointY;
+        notifyObservers();
     }
 
     public Point getPointZ() {
@@ -41,6 +47,7 @@ public class Triangle extends Shape {
 
     public void setPointZ(Point pointZ) {
         this.pointZ = pointZ;
+        notifyObservers();
     }
 
     public long getId() {
@@ -76,5 +83,9 @@ public class Triangle extends Shape {
         strResult.append(" ,pointY=(").append(pointY.getX()).append(',').append(pointY.getY()).append(')');
         strResult.append(" ,pointZ=(").append(pointZ.getX()).append(',').append(pointZ.getY()).append(")}");
         return strResult.toString();
+    }
+
+    private void notifyObservers()  {
+        observer.actionPerformed(this);
     }
 }
