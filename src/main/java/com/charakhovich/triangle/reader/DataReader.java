@@ -16,7 +16,7 @@ public class DataReader {
 
     public List<String> readDataFromFile(String filePath) throws TriangleException {
         String filePathTemp = filePath;
-        ArrayList<String> resultList = new ArrayList();
+        ArrayList<String> resultListStrings = new ArrayList();
         File fileToRead = new File(filePathTemp);
         if (!fileToRead.exists()) {
             logger.log(Level.INFO, "File not found" + filePathTemp);
@@ -24,17 +24,17 @@ public class DataReader {
             fileToRead = new File(filePathTemp);
         }
         if (!fileToRead.isFile()) {
-            throw new TriangleException("File not found.");
+            throw new TriangleException("This isn't file");
         }
         try (FileReader fileReader = new FileReader(filePathTemp);
              BufferedReader bufferedReader = new BufferedReader(fileReader)) {
-             resultList = (ArrayList) bufferedReader.lines().collect(Collectors.toList());
+            resultListStrings = (ArrayList) bufferedReader.lines().collect(Collectors.toList());
         } catch (FileNotFoundException ex) {
             ex.printStackTrace();
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        return resultList;
+        return resultListStrings;
     }
 
 }
