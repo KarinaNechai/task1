@@ -1,8 +1,7 @@
 package com.charakhovich.triangle.entity;
 
-import com.charakhovich.triangle.obsever.Observer;
-import com.charakhovich.triangle.obsever.impl.TriangleObserver;
 import com.charakhovich.triangle.generator.Generator;
+import com.charakhovich.triangle.obsever.impl.TriangleObserver;
 
 public class Triangle extends Shape {
     private Point pointX;
@@ -16,7 +15,6 @@ public class Triangle extends Shape {
         this.pointY = pointY;
         this.pointZ = pointZ;
         triangleId = Generator.generateID();
-        Observer observer;
     }
 
     public Triangle() {
@@ -59,8 +57,7 @@ public class Triangle extends Shape {
         if (this == o) return true;
         if (!(o instanceof Triangle)) return false;
         Triangle triangle = (Triangle) o;
-        return getId() == triangle.getId() &&
-                getPointX().equals(triangle.getPointX()) &&
+        return getPointX().equals(triangle.getPointX()) &&
                 getPointY().equals(triangle.getPointY()) &&
                 getPointZ().equals(triangle.getPointZ());
     }
@@ -85,7 +82,17 @@ public class Triangle extends Shape {
         return strResult.toString();
     }
 
-    private void notifyObservers()  {
-        observer.actionPerformed(this);
+    private void notifyObservers() {
+        if (observer != null) {
+            observer.actionPerformed(this);
+        }
+    }
+
+    public void attach(TriangleObserver observer) {
+        this.observer = observer;
+    }
+
+    public void detach(TriangleObserver observer) {
+        this.observer = null;
     }
 }

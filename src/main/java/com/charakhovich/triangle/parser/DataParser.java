@@ -1,20 +1,18 @@
 package com.charakhovich.triangle.parser;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class DataParser {
-    static final Logger logger = LogManager.getLogger();
-    private static final String SPLITTER = "\\s+";
+    private static final String COORDINATE_SEPARATOR = "\\,";
+    private static final String POINT_SEPARATOR = "[()]";
 
-    public Double[] parserData(String str) {
-        String[] arrayString = str.split(SPLITTER);
-        int numberCoordinates = arrayString.length;
-        Double[] coordinates = new Double[numberCoordinates];
-        for (int i = 0; i < numberCoordinates; i++) {
-            coordinates[i] = Double.valueOf(arrayString[i]);
-        }
-        return coordinates;
+    public List<String> parseData(String parseString, String separator) {
+        String[] arrayString = parseString.split(separator);
+        List<String> resultList = Arrays.stream(arrayString)
+                .map(String::trim).filter(s -> !s.isBlank()).collect(Collectors.toList());
+        return resultList;
     }
 
 }

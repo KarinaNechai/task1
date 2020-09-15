@@ -6,21 +6,21 @@ import org.testng.annotations.Test;
 
 public class DataValidateTest {
 
-    @Test(dataProvider = "dataProvider")
+    @Test(dataProvider = "numbers")
     public void testIsValid(String string, boolean expected) {
-        DataValidate dataValidate = new DataValidate();
-        Assert.assertEquals(dataValidate.isValid(string), expected);
+        Assert.assertEquals( DataValidate.isValid(string), expected);
     }
 
-    @DataProvider(name = "stringCoordinatesOfTriangle")
-    public Object[][] dataProvider() {
+   @DataProvider(name = "numbers")
+    public Object[][] numbers () {
         return new Object[][]{
-                {"12. 0.00 12.00 3.00 14.00 5.00", false},
-                {"12.00 0.00 12.00 3.00 14.00 5.00", true},
-                {"   12.00 4.00 12.00 3.00 14.00 5.00", true},
-                {"12.00 0.00 12.00     3.00 14.00 5.00   ", true},
-                {"12,00 0.00 12.00 3.00 14.00 5.00   ", false},
-                {"", false}
+                {"12.", true},
+                {"12.00", true},
+                {"-12.00", true},
+                {"+12.00", true},
+                {"-.1", true},
+                {"112.00", false},
+                {"12,145", false}
         };
     }
 }

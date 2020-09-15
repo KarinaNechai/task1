@@ -1,7 +1,7 @@
 package com.charakhovich.triangle.repository;
 
 import com.charakhovich.triangle.entity.Triangle;
-import com.charakhovich.triangle.specification.Specification;
+import com.charakhovich.triangle.specification.impl.SpecificationTriangleMaxSquare;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,15 +11,26 @@ import java.util.stream.Collectors;
 public class TriangleRepository {
     private List<Triangle> triangleList;
 
-    public void sort(TriangleSortBy triangleSortBy) {
+    private TriangleRepository() {
+        triangleList = new ArrayList<>();
+    }
+
+    public static TriangleRepository getInstance() {
+        return TriangleRepository.SingletonHolder.HOLDER_INSTANCE;
+    }
+
+    private static class SingletonHolder {
+        static final TriangleRepository HOLDER_INSTANCE = new TriangleRepository();
+    }
+
+    public void sort(ComparatorTriangle triangleSortBy) {
         triangleList.sort(triangleSortBy);
     }
 
-    public List<Triangle> query(Specification specification) {
+    public List<Triangle> query(SpecificationTriangleMaxSquare specification) {
         ArrayList<Triangle> resultList = (ArrayList<Triangle>) triangleList.stream()
-                .filter(o -> specification.specify(o)).collect(Collectors.toList());
+                .filter(specification::specify).collect(Collectors.toList());
         return resultList;
-
     }
 
     public boolean add(Triangle triangle) {
@@ -38,18 +49,7 @@ public class TriangleRepository {
         return triangleList.remove(index);
     }
 
-    private TriangleRepository() {
-        triangleList = new ArrayList<>();
-    }
-
-    public static TriangleRepository getInstance() {
-        return TriangleRepository.SingletonHolder.HOLDER_INSTANCE;
-    }
-
-    private static class SingletonHolder {
-        static final TriangleRepository HOLDER_INSTANCE = new TriangleRepository();
-    }
-    public List<Triangle> getTriangleList(){
+    public List<Triangle> getTriangleList() {
         return Collections.unmodifiableList(triangleList);
     }
 }

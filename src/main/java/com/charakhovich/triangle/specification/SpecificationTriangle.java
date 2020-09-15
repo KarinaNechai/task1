@@ -2,6 +2,6 @@ package com.charakhovich.triangle.specification;
 
 import com.charakhovich.triangle.entity.Triangle;
 
-public interface Specification  {
+public interface SpecificationTriangle  {
     boolean specify(Triangle triangle);
 }
